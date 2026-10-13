@@ -26,17 +26,17 @@ import { google } from '@ai-sdk/google';
 import { ollama } from 'ollama-ai-provider-v2';
 
 // Groq:
-export const model = groq('openai/gpt-oss-20b');
+//export const model = groq('openai/gpt-oss-20b');
 // export const model = groq('openai/gpt-oss-120b');
 
 // Anthropic:
-// export const model = anthropic('claude-haiku-4-5');
+//export const model = anthropic('claude-haiku-4-5');
 
 // OpenAI:
 // export const model = openai('gpt-5-mini');
 
 // Gemini:
-// export const model = google('gemini-2.5-flash');
+export const model = google('gemini-2.5-flash');
 
 // Ollama:
 // export const model = ollama('gpt-oss');
