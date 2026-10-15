@@ -178,7 +178,7 @@ async function withoutPlanning() {
         onStepEnd: tracer.onStepFinish,
     })
 
-    console.log('\n RESPUESTA:', text.green)
+    console.log('\n RESPUESTA:', text.blue)
     return tracer.summary()
 
 }
@@ -238,10 +238,16 @@ async function withPlanning() {
         findings.push(`[${step.goal}] \n${text.trim()}`)
     }
 
-    console.log('\n═══ RESOLUCIÓN FINAL ═══\n'.blue)
-    console.log(findings)
+    const { text: finalResponse } = await generateText({
+        model,
+        instructions: `Integra los resultados parciales en un operativo final y coherente para resolver la misión inicial`,
+        prompt: `Los hallazgos obtenidos son: ${findings.join('\n')}\n\n da una respuesta final al problema inicial: ${MISSION}`,
+        onStepEnd: tracer.onStepFinish,
+    })
 
-
+    console.log('\n═══ OPERATIVO FINAL ═══\n'.blue)
+    console.log(finalResponse.green)
+    return tracer.summary()
 
 }
 
