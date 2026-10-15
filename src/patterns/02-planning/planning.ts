@@ -214,7 +214,6 @@ const buildPlan = async (tracer: ReturnType<typeof createTracer>) => {
 
 
     return output.steps
-
 }
 
 async function withPlanning() {
@@ -222,6 +221,28 @@ async function withPlanning() {
     const tracer = createTracer('with-planning')
 
     const steps = await buildPlan(tracer)
+
+
+    const findings: string[] = []
+
+    for (const [index, step] of steps.entries()) {
+        console.log(`\n═══ EJECUTANDO PASO ${index + 1}: ${step.goal} ═══\n`.blue)
+
+        const { text } = await generateText({
+            model,
+            instructions: `Resuelve de manera eficaz y concisa el paso actual. El objetivo general es ${MISSION}`,
+            prompt: `En base a los hallazgos anteriores, ${findings.join('\n')}\n\n Resuelve lo siguiente: ${step.goal}`,
+            onStepEnd: tracer.onStepFinish,
+        })
+
+        findings.push(`[${step.goal}] \n${text.trim()}`)
+    }
+
+    console.log('\n═══ RESOLUCIÓN FINAL ═══\n'.blue)
+    console.log(findings)
+
+
+
 }
 
 
