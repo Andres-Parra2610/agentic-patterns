@@ -136,7 +136,7 @@ const withTools = async () => {
         prompt: QUESTION,
         tools: { findCourses },
         stopWhen: stepCountIs(6),
-        onStepFinish: tracer.onStepFinish,
+        onStepEnd: tracer.onStepFinish,
     })
 
     console.log('\n Respuesta CON TOOLS: ', text.green);
